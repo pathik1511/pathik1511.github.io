@@ -54,13 +54,14 @@ KAGGLE_USERNAME = os.environ.get("KAGGLE_USERNAME", "pathik1511")
 TEAM_NAMES = [
     "pathik1511",
     "Pathik Patel",
+    "Underdogs"
 ]
 
 # The API cannot reliably return your tier or lifetime medal counts.
 # Maintain them here (they rarely change). These feed the four summary
 # cards at the top of the Kaggle section.
 PROFILE_OVERRIDES = {
-    "competitions": {"tier": "Contributor", "rank": None, "gold": 0, "silver": 0, "bronze": 0},
+    "competitions": {"tier": "Contributor", "rank": None, "gold": 1, "silver": 2, "bronze": 1},
     "notebooks":    {"tier": "Contributor", "gold": 0, "silver": 0, "bronze": 0},
     "datasets":     {"tier": "Novice",      "gold": 0, "silver": 0, "bronze": 0},
     "discussion":   {"tier": "Novice",      "gold": 0, "silver": 0, "bronze": 0},
