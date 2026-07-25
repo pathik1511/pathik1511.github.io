@@ -2,36 +2,39 @@
 """
 fetch_kaggle.py
 ================
-Writes `kaggle_stats.json` at the repo root for the portfolio Kaggle
-section. Designed to run from a GitHub Action on a daily schedule.
+Pulls Kaggle competition standings for a single user and writes
+`kaggle_stats.json` at the repo root. Designed to run from a GitHub
+Action on a daily schedule.
 
-WHY SO MUCH IS MANUAL (read before trusting / editing)
-------------------------------------------------------
-The Kaggle public API does NOT expose "my rank in competition X". There is
-no userRank field. It only exposes which comps you've entered and the raw
-leaderboard rows (team name + score). Deriving your rank means downloading
-a leaderboard and finding your team in it - which fails whenever a comp
-hides its leaderboard (common for ONGOING and code competitions) or your
-team name doesn't match.
+WHAT IT CAN AND CANNOT DO  (read this before trusting the numbers)
+------------------------------------------------------------------
+The Kaggle public API does NOT expose "my rank in competition X"
+directly. There is no userRank field. What it DOES expose:
 
-Because that derivation is unreliable, this script treats YOUR reported
-numbers as authoritative:
-  * ONGOING_OVERRIDES and PAST_OVERRIDES below are the source of truth.
-  * Entries with auto=False are never touched by the API - they display
-    exactly as written here. Use this for anything the API can't see.
-  * Entries with auto=True are refreshed from the leaderboard IF (and only
-    if) the script can find your team; otherwise the manual value stays.
-  * Newly entered comps not listed below are auto-discovered and appended
-    as "pending" so you notice them and can add real numbers.
+  * competitions_list(...)          -> which comps you have entered
+                                       (the `user_has_entered` flag)
+  * competition_leaderboard_view    -> the leaderboard rows
+                                       (team name + score + date)
 
-Tier + medal counts (PROFILE_OVERRIDES) are manual too - no clean per-user
-endpoint exists. Verified from your Progression dashboard on 2026-07-25.
+So this script derives your rank by downloading each entered
+competition's PUBLIC leaderboard and finding your team name in it.
 
-ENV / SECRETS required (GitHub repo secrets):
-  KAGGLE_USERNAME   e.g. pathik1511
-  KAGGLE_KEY        from kaggle.com -> Settings -> Create New Token
-Note: with no secrets set, the script exits without overwriting the file,
-so a failed auth never wipes your good data.
+Consequences you must accept:
+  * ONGOING comps often hide or partially show the public leaderboard.
+    If your team isn't found, the comp is emitted with status="pending"
+    ("Entered - rank pending") instead of a fake number.
+  * The rank is your PUBLIC-leaderboard rank, which for active comps is
+    not your final/private standing.
+  * Matching depends on TEAM_NAMES below. If your Kaggle team name isn't
+    listed, you won't be found. Fill it in.
+
+Tier + medal COUNTS: the API has no clean per-user medal endpoint either.
+Those are read from PROFILE_OVERRIDES below (you maintain them - they
+change rarely). Everything else is automatic.
+
+ENV / SECRETS required (set as GitHub repo secrets):
+  KAGGLE_USERNAME   your kaggle username  (e.g. pathik1511)
+  KAGGLE_KEY        your kaggle API key   (from kaggle.com -> Settings -> Create New Token)
 """
 
 import json
@@ -45,16 +48,19 @@ import datetime
 
 KAGGLE_USERNAME = os.environ.get("KAGGLE_USERNAME", "pathik1511")
 
-# Team names you've competed under (lowercased match). Only used to derive
-# rank for entries marked auto=True. Solo = your username / display name;
-# add any custom team name so the finder can locate you.
+# Every team name you have EVER competed under, lowercased match is used.
+# Solo competitors: this is usually just your username / display name.
+# NOTE: ongoing + past ranks below are now authoritative MANUAL overrides
+# (auto=False), so leaderboard matching is OPTIONAL. It only runs for an entry
+# explicitly marked auto=True. TEAM_NAMES is kept for that opt-in case.
 TEAM_NAMES = [
     "pathik1511",
     "Pathik Patel",
 ]
 
-# Tier + lifetime medal counts. Verified from your Kaggle Progression
-# dashboard (2026-07-25): 0 medals everywhere, Contributor across the board.
+# The API cannot reliably return your tier or lifetime medal counts.
+# Verified from your Kaggle Progression dashboard (2026-07-25): 0 medals in
+# every category, Contributor tier ("on path to Expert") across the board.
 PROFILE_OVERRIDES = {
     "competitions": {"tier": "Contributor", "rank": None, "gold": 0, "silver": 0, "bronze": 0},
     "notebooks":    {"tier": "Contributor", "gold": 0, "silver": 0, "bronze": 0},
@@ -62,34 +68,34 @@ PROFILE_OVERRIDES = {
     "discussion":   {"tier": "Contributor", "gold": 0, "silver": 0, "bronze": 0},
 }
 
-# ONGOING competitions. Your live ranks, reported 2026-07-25. auto=False
-# keeps them fixed (the API can't reliably read these leaderboards). When a
-# competition ends or your rank changes, update the number here - or flip
-# auto=True if you want the script to try refreshing it automatically.
+# Your ACTIVE competitions. The Kaggle API cannot reliably return your live
+# rank on ongoing comps (leaderboards are often hidden/partial), so these are
+# authoritative MANUAL overrides (auto=False) verified from each leaderboard.
+# The daily Action must NOT overwrite them with "pending" — build() below
+# only re-derives a rank when an entry is explicitly marked auto=True.
+# `score` is the competition's own metric (scales differ per comp); the site
+# shows it in the card meta line. Order here is preserved, but the site also
+# sorts ongoing best-percentile-first so the strongest result always leads.
 ONGOING_OVERRIDES = [
     {"title": "ARC Prize 2026 - ARC-AGI-3", "slug": "arc-prize-2026",
-     "rank": 97,  "totalTeams": 1907, "score": "1.25",   "deadline": "2026-10-25", "auto": False},
+     "rank": 97, "totalTeams": 1907, "score": "1.25", "deadline": "2026-10-25", "auto": False},
     {"title": "AI Agent Security - Multi-Step Tool Attacks", "slug": "ai-agent-security",
      "rank": 543, "totalTeams": 2335, "score": "82.620", "deadline": "2026-08-25", "auto": False},
     {"title": "Biohub - Cell Tracking During Development", "slug": "biohub-cell-tracking",
-     "rank": 486, "totalTeams": 1615, "score": "0.900",  "deadline": "2026-09-25", "auto": False},
+     "rank": 486, "totalTeams": 1615, "score": "0.900", "deadline": "2026-09-25", "auto": False},
 ]
 
-# COMPLETED competitions, read from your public profile (rank / total).
-# auto=False because final ranks are stable and known.
+# Your completed competitions, read directly from your public profile
+# (rank / total teams). Hardcoded (auto=False) because the final ranks are
+# known and stable - no leaderboard matching needed. Trimmed to the two
+# genuinely competitive finishes (top ~26-28%); the weaker bottom-half
+# entries were removed so the section reads as achievement, not padding.
+# The site sorts these best-percentile-first automatically.
 PAST_OVERRIDES = [
     {"title": "LLM Prompt Recovery", "slug": "llm-prompt-recovery",
      "rank": 567, "totalTeams": 2175, "medal": "none", "type": "Featured", "auto": False},
     {"title": "CommonLit - Evaluate Student Summaries", "slug": "commonlit-evaluate-student-summaries",
      "rank": 573, "totalTeams": 2064, "medal": "none", "type": "Featured", "auto": False},
-    {"title": "Linking Writing Processes to Writing Quality", "slug": "linking-writing-processes-to-writing-quality",
-     "rank": 1073, "totalTeams": 1876, "medal": "none", "type": "Featured", "auto": False},
-    {"title": "Global Wheat Detection", "slug": "global-wheat-detection",
-     "rank": 1335, "totalTeams": 2245, "medal": "none", "type": "Research", "auto": False},
-    {"title": "OSIC Pulmonary Fibrosis Progression", "slug": "osic-pulmonary-fibrosis-progression",
-     "rank": 1719, "totalTeams": 2097, "medal": "none", "type": "Featured", "auto": False},
-    {"title": "Cassava Leaf Disease Classification", "slug": "cassava-leaf-disease-classification",
-     "rank": 2747, "totalTeams": 3900, "medal": "none", "type": "Research", "auto": False},
 ]
 
 OUTPUT_PATH = os.environ.get("KAGGLE_OUTPUT", "kaggle_stats.json")
@@ -103,7 +109,12 @@ def log(msg):
 
 
 def get_api():
-    from kaggle.api.kaggle_api_extended import KaggleApi
+    """Authenticate. Relies on KAGGLE_USERNAME / KAGGLE_KEY env vars."""
+    try:
+        from kaggle.api.kaggle_api_extended import KaggleApi
+    except Exception as e:
+        log(f"kaggle package not importable: {e}")
+        raise
     api = KaggleApi()
     api.authenticate()
     return api
@@ -115,15 +126,20 @@ def team_matches(name):
 
 
 def find_rank_in_leaderboard(api, slug):
-    """Return (rank, total) or (None, total) if not found, (None, None) if
-    the leaderboard can't be read."""
+    """
+    Download the public leaderboard and locate our team.
+    Returns (rank, total_teams) or (None, total_teams) if not found,
+    or (None, None) if the leaderboard is unavailable.
+    """
     try:
         rows = api.competition_leaderboard_view(slug)
     except Exception as e:
         log(f"  leaderboard unavailable for {slug}: {e}")
         return None, None
+
     if not rows:
         return None, None
+
     total = len(rows)
     for idx, row in enumerate(rows):
         team = getattr(row, "teamName", None) or getattr(row, "team_name", None) or ""
@@ -138,7 +154,7 @@ def percentile(rank, total):
     return round((1 - (rank - 1) / total) * 100, 1)
 
 
-def medal_from_percentile(pct):
+def medal_from_percentile(pct, total):
     if pct is None:
         return "none"
     if pct >= 99:
@@ -148,24 +164,6 @@ def medal_from_percentile(pct):
     if pct >= 90:
         return "bronze"
     return "none"
-
-
-def resolve_override(api, o, is_past):
-    """Apply auto-refresh if requested, then compute derived fields."""
-    entry = dict(o)
-    if o.get("auto") and o.get("slug"):
-        rank, total = find_rank_in_leaderboard(api, o["slug"])
-        if rank:
-            entry["rank"] = rank
-            entry["totalTeams"] = total or entry.get("totalTeams")
-    entry["percentile"] = percentile(entry.get("rank"), entry.get("totalTeams"))
-    if is_past:
-        if not entry.get("medal") or entry.get("medal") == "auto":
-            entry["medal"] = medal_from_percentile(entry["percentile"])
-    else:
-        entry["status"] = "ranked" if entry.get("rank") else "pending"
-    entry.pop("auto", None)
-    return entry
 
 
 def build(api):
@@ -179,50 +177,43 @@ def build(api):
         "past": [],
     }
 
-    # ---- ONGOING: manual overrides are authoritative ----
-    covered = set()
+    # ---- ONGOING: curated MANUAL overrides (auto=False). The Kaggle API has
+    #      no per-user rank endpoint and ongoing leaderboards are often hidden,
+    #      so these are the source of truth and are NEVER wiped to "pending".
+    #      An entry is only re-derived from the public leaderboard if it opts
+    #      in with auto=True (leaves the number alone if the match fails).
     for o in ONGOING_OVERRIDES:
-        result["ongoing"].append(resolve_override(api, o, is_past=False))
-        if o.get("slug"):
-            covered.add(o["slug"].lower())
+        entry = {
+            "title": o["title"], "slug": o.get("slug"),
+            "rank": o.get("rank"), "totalTeams": o.get("totalTeams"),
+        }
+        if o.get("auto") and o.get("slug"):
+            rank, total = find_rank_in_leaderboard(api, o["slug"])
+            if rank:
+                entry["rank"] = rank
+                entry["totalTeams"] = total or entry.get("totalTeams")
+        entry["percentile"] = percentile(entry.get("rank"), entry.get("totalTeams"))
+        if o.get("score") is not None:
+            entry["score"] = o["score"]
+        entry["deadline"] = o.get("deadline", "")
+        entry["status"] = "ranked" if entry.get("rank") else "pending"
+        result["ongoing"].append(entry)
 
-    # Auto-discover NEW entered comps not already listed, append as pending
-    # so you notice them (never overwrites the ones above).
-    try:
-        page = 1
-        while True:
-            comps = api.competitions_list(page=page)
-            if not comps:
-                break
-            for c in comps:
-                entered = getattr(c, "userHasEntered", False) or getattr(c, "user_has_entered", False)
-                if not entered:
-                    continue
-                slug = (getattr(c, "ref", None) or getattr(c, "id", "") or "")
-                if str(slug).lower() in covered:
-                    continue
-                covered.add(str(slug).lower())
-                deadline = getattr(c, "deadline", None)
-                try:
-                    dstr = deadline.strftime("%Y-%m-%d") if deadline else ""
-                except Exception:
-                    dstr = str(deadline) if deadline else ""
-                result["ongoing"].append({
-                    "title": getattr(c, "title", slug), "slug": slug,
-                    "rank": None, "totalTeams": None, "percentile": None,
-                    "deadline": dstr, "status": "pending",
-                })
-            if len(comps) < 20:
-                break
-            page += 1
-            if page > 10:
-                break
-    except Exception as e:
-        log(f"competitions_list failed (kept manual ongoing only): {e}")
+    log(f"ongoing competitions emitted: {len(result['ongoing'])}")
 
-    # ---- PAST ----
+    # ---- PAST: curated overrides, optionally auto-refreshed ----
     for p in PAST_OVERRIDES:
-        result["past"].append(resolve_override(api, p, is_past=True))
+        entry = dict(p)
+        if p.get("auto") and p.get("slug"):
+            rank, total = find_rank_in_leaderboard(api, p["slug"])
+            if rank:
+                entry["rank"] = rank
+                entry["totalTeams"] = total or entry.get("totalTeams")
+        entry["percentile"] = percentile(entry.get("rank"), entry.get("totalTeams"))
+        if not entry.get("medal") or entry.get("medal") == "auto":
+            entry["medal"] = medal_from_percentile(entry["percentile"], entry.get("totalTeams"))
+        entry.pop("auto", None)
+        result["past"].append(entry)
 
     return result
 
@@ -230,12 +221,13 @@ def build(api):
 def main():
     try:
         api = get_api()
-    except Exception as e:
-        log(f"Auth failed ({e}). Not overwriting {OUTPUT_PATH} so the site "
-            f"keeps its last-known-good data. Check KAGGLE_USERNAME/KAGGLE_KEY.")
+    except Exception:
+        log("Authentication failed - writing nothing so the site keeps its "
+            "last-known-good JSON. Check KAGGLE_USERNAME / KAGGLE_KEY secrets.")
         sys.exit(1)
 
     data = build(api)
+
     with open(OUTPUT_PATH, "w") as f:
         json.dump(data, f, indent=2)
     log(f"wrote {OUTPUT_PATH}: {len(data['ongoing'])} ongoing, {len(data['past'])} past")
