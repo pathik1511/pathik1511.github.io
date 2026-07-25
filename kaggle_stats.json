@@ -2,20 +2,83 @@
   "username": "pathik1511",
   "_sample": false,
   "updated": "2026-07-25",
-  "note": "Ongoing and past ranks are authoritative manual overrides (auto=False) maintained in scripts/fetch_kaggle.py — the Kaggle API has no 'my rank' endpoint, so the daily Action refreshes profile tiers/medals but does NOT overwrite these ranks. Verified from the public profile on 2026-07-25.",
   "profile": {
-    "competitions": { "tier": "Contributor", "rank": null, "gold": 0, "silver": 0, "bronze": 0 },
-    "notebooks":    { "tier": "Contributor", "gold": 0, "silver": 0, "bronze": 0 },
-    "datasets":     { "tier": "Contributor", "gold": 0, "silver": 0, "bronze": 0 },
-    "discussion":   { "tier": "Contributor", "gold": 0, "silver": 0, "bronze": 0 }
+    "competitions": {
+      "tier": "Contributor",
+      "rank": null,
+      "gold": 0,
+      "silver": 0,
+      "bronze": 0
+    },
+    "notebooks": {
+      "tier": "Contributor",
+      "gold": 0,
+      "silver": 0,
+      "bronze": 0
+    },
+    "datasets": {
+      "tier": "Contributor",
+      "gold": 0,
+      "silver": 0,
+      "bronze": 0
+    },
+    "discussion": {
+      "tier": "Contributor",
+      "gold": 0,
+      "silver": 0,
+      "bronze": 0
+    }
   },
   "ongoing": [
-    { "title": "ARC Prize 2026 - ARC-AGI-3", "slug": "arc-prize-2026", "rank": 97, "totalTeams": 1907, "percentile": 95.0, "score": "1.25", "deadline": "2026-10-25", "status": "ranked" },
-    { "title": "AI Agent Security - Multi-Step Tool Attacks", "slug": "ai-agent-security", "rank": 543, "totalTeams": 2335, "percentile": 76.8, "score": "82.620", "deadline": "2026-08-25", "status": "ranked" },
-    { "title": "Biohub - Cell Tracking During Development", "slug": "biohub-cell-tracking", "rank": 486, "totalTeams": 1615, "percentile": 70.0, "score": "0.900", "deadline": "2026-09-25", "status": "ranked" }
+    {
+      "title": "ARC Prize 2026 - ARC-AGI-3",
+      "slug": "arc-prize-2026",
+      "rank": 97,
+      "totalTeams": 1907,
+      "percentile": 95.0,
+      "score": "1.25",
+      "deadline": "2026-10-25",
+      "status": "ranked"
+    },
+    {
+      "title": "AI Agent Security - Multi-Step Tool Attacks",
+      "slug": "ai-agent-security",
+      "rank": 543,
+      "totalTeams": 2335,
+      "percentile": 76.8,
+      "score": "82.620",
+      "deadline": "2026-08-25",
+      "status": "ranked"
+    },
+    {
+      "title": "Biohub - Cell Tracking During Development",
+      "slug": "biohub-cell-tracking",
+      "rank": 486,
+      "totalTeams": 1615,
+      "percentile": 70.0,
+      "score": "0.900",
+      "deadline": "2026-09-25",
+      "status": "ranked"
+    }
   ],
   "past": [
-    { "title": "LLM Prompt Recovery", "slug": "llm-prompt-recovery", "rank": 567, "totalTeams": 2175, "percentile": 74.0, "medal": "none", "type": "Featured" },
-    { "title": "CommonLit - Evaluate Student Summaries", "slug": "commonlit-evaluate-student-summaries", "rank": 573, "totalTeams": 2064, "percentile": 72.3, "medal": "none", "type": "Featured" }
+    {
+      "title": "LLM Prompt Recovery",
+      "slug": "llm-prompt-recovery",
+      "rank": 567,
+      "totalTeams": 2175,
+      "medal": "none",
+      "type": "Featured",
+      "percentile": 74.0
+    },
+    {
+      "title": "CommonLit - Evaluate Student Summaries",
+      "slug": "commonlit-evaluate-student-summaries",
+      "rank": 573,
+      "totalTeams": 2064,
+      "medal": "none",
+      "type": "Featured",
+      "percentile": 72.3
+    }
   ]
 }
