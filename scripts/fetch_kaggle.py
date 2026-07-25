@@ -34,7 +34,7 @@ change rarely). Everything else is automatic.
 
 ENV / SECRETS required (set as GitHub repo secrets):
   KAGGLE_USERNAME   your kaggle username  (e.g. pathik1511)
-  KAGGLE_KEY        your kaggle API key   (from kaggle.com -> Account -> Create New Token)
+  KAGGLE_KEY        your kaggle API key   (from kaggle.com -> Settings -> Create New Token)
 """
 
 import json
@@ -50,30 +50,41 @@ KAGGLE_USERNAME = os.environ.get("KAGGLE_USERNAME", "pathik1511")
 
 # Every team name you have EVER competed under, lowercased match is used.
 # Solo competitors: this is usually just your username / display name.
-# Add each team name you've used so the rank-finder can locate you.
+# You compete SOLO in 7 of 9 comps; 2 were team entries. If either of your
+# ACTIVE competitions is a team entry under a custom team name, add that
+# name here so the live-rank finder can locate you on the leaderboard.
 TEAM_NAMES = [
     "pathik1511",
     "Pathik Patel",
-    "Underdogs"
 ]
 
 # The API cannot reliably return your tier or lifetime medal counts.
-# Maintain them here (they rarely change). These feed the four summary
-# cards at the top of the Kaggle section.
+# Verified from your Kaggle Progression dashboard (2026-07-25): 0 medals in
+# every category, Contributor tier ("on path to Expert") across the board.
 PROFILE_OVERRIDES = {
-    "competitions": {"tier": "Contributor", "rank": None, "gold": 1, "silver": 2, "bronze": 1},
+    "competitions": {"tier": "Contributor", "rank": None, "gold": 0, "silver": 0, "bronze": 0},
     "notebooks":    {"tier": "Contributor", "gold": 0, "silver": 0, "bronze": 0},
-    "datasets":     {"tier": "Novice",      "gold": 0, "silver": 0, "bronze": 0},
-    "discussion":   {"tier": "Novice",      "gold": 0, "silver": 0, "bronze": 0},
+    "datasets":     {"tier": "Contributor", "gold": 0, "silver": 0, "bronze": 0},
+    "discussion":   {"tier": "Contributor", "gold": 0, "silver": 0, "bronze": 0},
 }
 
-# Manually curated past finishes you want featured. The API can verify /
-# refresh these if the leaderboard is downloadable, but listing them here
-# guarantees they always appear even for older comps.
-# Set "auto": True to let the script try to re-derive rank/percentile.
+# Your completed competitions, read directly from your public profile
+# (rank / total teams). These are hardcoded (auto=False) because the exact
+# final ranks are already known and stable - no leaderboard matching needed.
+# The site sorts these best-percentile-first automatically.
 PAST_OVERRIDES = [
-    # {"title": "Titanic - Machine Learning from Disaster", "slug": "titanic",
-    #  "rank": 1200, "totalTeams": 15000, "medal": "none", "type": "Getting Started", "auto": True},
+    {"title": "LLM Prompt Recovery", "slug": "llm-prompt-recovery",
+     "rank": 567, "totalTeams": 2175, "medal": "none", "type": "Featured", "auto": False},
+    {"title": "CommonLit - Evaluate Student Summaries", "slug": "commonlit-evaluate-student-summaries",
+     "rank": 573, "totalTeams": 2064, "medal": "none", "type": "Featured", "auto": False},
+    {"title": "Linking Writing Processes to Writing Quality", "slug": "linking-writing-processes-to-writing-quality",
+     "rank": 1073, "totalTeams": 1876, "medal": "none", "type": "Featured", "auto": False},
+    {"title": "Global Wheat Detection", "slug": "global-wheat-detection",
+     "rank": 1335, "totalTeams": 2245, "medal": "none", "type": "Research", "auto": False},
+    {"title": "OSIC Pulmonary Fibrosis Progression", "slug": "osic-pulmonary-fibrosis-progression",
+     "rank": 1719, "totalTeams": 2097, "medal": "none", "type": "Featured", "auto": False},
+    {"title": "Cassava Leaf Disease Classification", "slug": "cassava-leaf-disease-classification",
+     "rank": 2747, "totalTeams": 3900, "medal": "none", "type": "Research", "auto": False},
 ]
 
 OUTPUT_PATH = os.environ.get("KAGGLE_OUTPUT", "kaggle_stats.json")
@@ -119,7 +130,6 @@ def find_rank_in_leaderboard(api, slug):
         return None, None
 
     total = len(rows)
-    # rows come back sorted by rank; index+1 is the position
     for idx, row in enumerate(rows):
         team = getattr(row, "teamName", None) or getattr(row, "team_name", None) or ""
         if team_matches(team):
@@ -130,16 +140,10 @@ def find_rank_in_leaderboard(api, slug):
 def percentile(rank, total):
     if not rank or not total or total <= 0:
         return None
-    # higher = better; top of leaderboard -> ~100
     return round((1 - (rank - 1) / total) * 100, 1)
 
 
 def medal_from_percentile(pct, total):
-    """
-    Rough Kaggle medal zones (real thresholds vary by comp size and are
-    only awarded on FINAL private leaderboard). Used only as a hint when
-    an override doesn't specify a medal.
-    """
     if pct is None:
         return "none"
     if pct >= 99:
@@ -176,7 +180,7 @@ def build(api):
             if len(comps) < 20:
                 break
             page += 1
-            if page > 10:  # safety
+            if page > 10:
                 break
     except Exception as e:
         log(f"competitions_list failed: {e}")

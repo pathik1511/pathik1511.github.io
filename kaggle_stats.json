@@ -2,33 +2,24 @@
   "username": "pathik1511",
   "_sample": false,
   "updated": "2026-07-25",
+  "note": "Seeded from public profile on 2026-07-25. The daily GitHub Action overwrites this with live data once KAGGLE_USERNAME/KAGGLE_KEY secrets are set. Ongoing ranks show 'pending' until the Action can read each leaderboard.",
   "profile": {
-    "competitions": {
-      "tier": "Contributor",
-      "rank": null,
-      "gold": 1,
-      "silver": 2,
-      "bronze": 1
-    },
-    "notebooks": {
-      "tier": "Contributor",
-      "gold": 0,
-      "silver": 0,
-      "bronze": 0
-    },
-    "datasets": {
-      "tier": "Novice",
-      "gold": 0,
-      "silver": 0,
-      "bronze": 0
-    },
-    "discussion": {
-      "tier": "Novice",
-      "gold": 0,
-      "silver": 0,
-      "bronze": 0
-    }
+    "competitions": { "tier": "Contributor", "rank": null, "gold": 0, "silver": 0, "bronze": 0 },
+    "notebooks":    { "tier": "Contributor", "gold": 0, "silver": 0, "bronze": 0 },
+    "datasets":     { "tier": "Contributor", "gold": 0, "silver": 0, "bronze": 0 },
+    "discussion":   { "tier": "Contributor", "gold": 0, "silver": 0, "bronze": 0 }
   },
-  "ongoing": [],
-  "past": []
+  "ongoing": [
+    { "title": "ARC Prize 2026 - ARC-AGI-3", "slug": "arc-prize-2026", "rank": null, "totalTeams": null, "percentile": null, "deadline": "2026-10-25", "status": "pending" },
+    { "title": "AI Agent Security - Multi-Step Tool Attacks", "slug": "ai-agent-security", "rank": null, "totalTeams": null, "percentile": null, "deadline": "2026-08-25", "status": "pending" },
+    { "title": "Biohub - Cell Tracking During Development", "slug": "biohub-cell-tracking", "rank": null, "totalTeams": null, "percentile": null, "deadline": "2026-09-25", "status": "pending" }
+  ],
+  "past": [
+    { "title": "LLM Prompt Recovery", "slug": "llm-prompt-recovery", "rank": 567, "totalTeams": 2175, "percentile": 74.0, "medal": "none", "type": "Featured" },
+    { "title": "CommonLit - Evaluate Student Summaries", "slug": "commonlit-evaluate-student-summaries", "rank": 573, "totalTeams": 2064, "percentile": 72.3, "medal": "none", "type": "Featured" },
+    { "title": "Linking Writing Processes to Writing Quality", "slug": "linking-writing-processes-to-writing-quality", "rank": 1073, "totalTeams": 1876, "percentile": 42.9, "medal": "none", "type": "Featured" },
+    { "title": "Global Wheat Detection", "slug": "global-wheat-detection", "rank": 1335, "totalTeams": 2245, "percentile": 40.6, "medal": "none", "type": "Research" },
+    { "title": "Cassava Leaf Disease Classification", "slug": "cassava-leaf-disease-classification", "rank": 2747, "totalTeams": 3900, "percentile": 29.6, "medal": "none", "type": "Research" },
+    { "title": "OSIC Pulmonary Fibrosis Progression", "slug": "osic-pulmonary-fibrosis-progression", "rank": 1719, "totalTeams": 2097, "percentile": 18.1, "medal": "none", "type": "Featured" }
+  ]
 }
