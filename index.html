@@ -1922,52 +1922,68 @@ const DATA = {
      ---------------------------------------------------------------- */
   projects: [
     {
-      title: "Multimodal Transformer for Sentiment Analysis",
-      desc: "Network fusing text, image, and tabular inputs into a single transformer encoder for review-level sentiment. Improved downstream creative-effectiveness measurement.",
-      tags: ["NLP", "Deep Learning", "Multimodal"],
-      icon: "network",
-      github: "https://github.com/pathik1511",
-      demo: ""
-    },
-    {
-      title: "Brand WAMM — Weighted Advertising Media Mix",
-      desc: "Production-ready media-mix modeling framework in Python/SQL estimating channel ROI across brands. Modular design cut runtime 40% and scaled across the portfolio.",
-      tags: ["MMM", "Causal Inference", "Python"],
-      icon: "chart",
-      github: "",
-      demo: ""
-    },
-    {
-      title: "Text-Classification Taxonomy Pipeline",
-      desc: "spaCy + Hugging Face pipeline auto-categorizing campaigns and mapping media assets to a standardized taxonomy — reduced manual tagging effort by 60%.",
-      tags: ["NLP", "Python"],
+      title: "ATS Resume Screener — Google Gemini",
+      desc: "AI-powered applicant-tracking screener that scores resumes against a job description using Google Gemini and LangChain — parses the PDF, extracts JD keywords, and returns a match breakdown.",
+      tags: ["GenAI", "NLP"],
       icon: "tag",
-      github: "",
+      github: "https://github.com/pathik1511/ATS_using_google_gemini",
       demo: ""
     },
     {
-      title: "Social Sentiment vs. Sports Pricing",
-      desc: "Research pipeline testing whether Twitter/Reddit sentiment leads price movements for major sporting events, using lag analysis and causation diagnostics.",
-      tags: ["NLP", "Time-Series", "Research"],
-      icon: "pulse",
-      github: "https://github.com/pathik1511",
+      title: "Natural Language → SQL (LLM)",
+      desc: "Turns plain-English questions into executable SQL with an LLM, letting non-technical users query a database directly instead of writing queries by hand.",
+      tags: ["GenAI", "NLP"],
+      icon: "db",
+      github: "https://github.com/pathik1511/texttosql",
       demo: ""
     },
     {
-      title: "Algorithmic Multi-Touch Attribution",
-      desc: "Path-level MTA models (logistic regression, Shapley value) to improve conversion attribution accuracy and supplement marketing-mix models.",
-      tags: ["Causal Inference", "MMM"],
-      icon: "flow",
-      github: "",
-      demo: ""
-    },
-    {
-      title: "Transfer-Learning Image Classifier",
-      desc: "Custom PyTorch classifiers via transfer learning, containerized on Kubernetes with NGC images and served through a Flask REST API across GCP/AWS/Azure.",
-      tags: ["Deep Learning", "MLOps", "Cloud"],
+      title: "Kidney Disease Classification — MLOps",
+      desc: "End-to-end deep-learning pipeline for kidney-scan classification: PyTorch model, experiment tracking in MLflow, and reproducible data/versioning with DVC.",
+      tags: ["Deep Learning", "MLOps", "Computer Vision"],
       icon: "cloud",
-      github: "https://github.com/pathik1511",
+      github: "https://github.com/pathik1511/Kidney-Disease-Classification-DeepLearning-Project-MlFlow",
       demo: ""
+    },
+    {
+      title: "Chicken Disease Detection — CI/CD",
+      desc: "End-to-end image-classification project with a Dockerized inference service and an automated CI/CD pipeline for build and deployment.",
+      tags: ["Deep Learning", "MLOps", "Computer Vision"],
+      icon: "flow",
+      github: "https://github.com/pathik1511/Chicken-Disease_endtoend_project",
+      demo: ""
+    },
+    {
+      title: "LLM Prompt Recovery (Kaggle)",
+      desc: "Recovers the original prompt that produced a given LLM rewrite — Kaggle competition solution, finished 567 / 2,175 teams.",
+      tags: ["GenAI", "NLP", "Kaggle"],
+      icon: "pulse",
+      github: "https://github.com/pathik1511/llm-prompt-recovery",
+      demo: "https://www.kaggle.com/competitions/llm-prompt-recovery/leaderboard"
+    },
+    {
+      title: "CommonLit — Summary Evaluation (Kaggle)",
+      desc: "Transformer/BERT models (Hugging Face) scoring the quality of student-written summaries — Kaggle competition, finished 573 / 2,064 teams.",
+      tags: ["NLP", "Deep Learning", "Kaggle"],
+      icon: "network",
+      github: "https://github.com/pathik1511/commonlit-evaluate-student-summaries",
+      demo: "https://www.kaggle.com/competitions/commonlit-evaluate-student-summaries/leaderboard"
+    },
+    {
+      title: "Coffee Store — Demand Forecasting",
+      desc: "Time-series forecasting and inventory optimisation for a retail coffee store, using regression and forecasting models to cut stockouts and overstock.",
+      tags: ["Forecasting", "Time-Series"],
+      icon: "chart",
+      github: "https://github.com/pathik1511/-Coffee-Bean-Store-Sales-Prediction-and-Inventory-Optimization",
+      demo: ""
+    },
+    {
+      title: "Cassava Leaf Disease Classification (Kaggle)",
+      desc: "CNN image classifier in TensorFlow for Cassava leaf-disease detection — Kaggle competition across 3,900+ teams.",
+      tags: ["Computer Vision", "Deep Learning", "Kaggle"],
+      icon: "vision",
+      github: "https://github.com/pathik1511/Casava_Leaves",
+      demo: "https://www.kaggle.com/competitions/cassava-leaf-disease-classification/leaderboard"
     }
   ]
 };
@@ -2414,7 +2430,9 @@ const PROJ_ICONS = {
   tag:     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 11.5 3H20a1 1 0 0 1 1 1v8.5L12.5 21a1.4 1.4 0 0 1-2 0L3 13.5a1.4 1.4 0 0 1 0-2Z"/><circle cx="16" cy="8" r="1.3"/></svg>',
   pulse:   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l2.5-7 4 14 2.5-7H21"/></svg>',
   flow:    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="6" height="4" rx="1"/><rect x="15" y="9" width="6" height="4" rx="1"/><rect x="3" y="16" width="6" height="4" rx="1"/><path d="M9 6h3a2 2 0 0 1 2 2v1M9 18h3a2 2 0 0 0 2-2v-1"/></svg>',
-  cloud:   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 18a4 4 0 0 1-.5-7.97A5.5 5.5 0 0 1 17 9.5a3.5 3.5 0 0 1 .5 6.96Z"/><path d="M12 13v5m-2.5-2.5L12 18l2.5-2.5"/></svg>'
+  cloud:   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 18a4 4 0 0 1-.5-7.97A5.5 5.5 0 0 1 17 9.5a3.5 3.5 0 0 1 .5 6.96Z"/><path d="M12 13v5m-2.5-2.5L12 18l2.5-2.5"/></svg>',
+  db:      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v6c0 1.66 3.58 3 8 3s8-1.34 8-3V5M4 11v6c0 1.66 3.58 3 8 3s8-1.34 8-3v-6"/></svg>',
+  vision:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>'
 };
 const ICON_GITHUB = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.39.6.11.82-.26.82-.58 0-.28-.01-1.04-.02-2.04-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.33-1.76-1.33-1.76-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.49 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.11-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.29-1.55 3.3-1.23 3.3-1.23.65 1.66.24 2.88.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.8 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58C20.57 21.8 24 17.3 24 12 24 5.37 18.63 0 12 0z"/></svg>';
 const ICON_LINK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg>';
