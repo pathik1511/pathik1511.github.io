@@ -1005,6 +1005,267 @@ footer {
 .ft-ico svg { width: 16px; height: 16px; fill: currentColor; }
 
 /* ================================================================
+   KAGGLE SECTION
+   ================================================================ */
+.kg-head-row {
+  display: flex; align-items: center; gap: 16px;
+  flex-wrap: wrap; margin-bottom: 8px;
+}
+.kg-profile-link {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  color: var(--teal);
+  border: 1px solid var(--glass-b);
+  background: var(--glass);
+  padding: 8px 14px;
+  border-radius: 8px;
+  transition: border-color .25s, transform .25s, color .25s;
+  min-height: 40px;
+}
+.kg-profile-link:hover { border-color: var(--teal); transform: translateY(-2px); }
+.kg-updated {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.05em;
+  color: var(--text-dim);
+}
+.kg-updated .live-dot {
+  display: inline-block; width: 7px; height: 7px;
+  border-radius: 50%; background: var(--teal);
+  box-shadow: 0 0 8px var(--teal-glow);
+  margin-right: 6px; vertical-align: middle;
+  animation: kg-pulse 2.4s ease-in-out infinite;
+}
+@keyframes kg-pulse { 0%,100%{opacity:1;} 50%{opacity:.35;} }
+
+/* Tier / medal summary cards */
+.kg-summary {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 34px;
+}
+.kg-stat { padding: 22px 18px; text-align: center; }
+.kg-stat .kg-tier-badge {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 100px;
+  margin-bottom: 12px;
+}
+.kg-stat .kg-sn {
+  font-family: var(--font-mono);
+  font-size: 2.1rem;
+  color: var(--teal);
+  line-height: 1;
+}
+.kg-stat .kg-sl {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-top: 8px; line-height: 1.4;
+}
+.kg-medals {
+  display: flex; justify-content: center; gap: 14px;
+  margin-top: 6px;
+}
+.kg-medal { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.kg-medal .m-ico { font-size: 1.15rem; }
+.kg-medal .m-n {
+  font-family: var(--font-mono); font-size: 0.85rem; color: var(--text);
+}
+.kg-medal .m-l {
+  font-family: var(--font-mono); font-size: 0.5rem;
+  letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-dim);
+}
+
+/* Tier colour tokens */
+.tier-grandmaster { background: rgba(245,166,35,0.16); color: var(--amber); border:1px solid rgba(245,166,35,.35);}
+.tier-master      { background: rgba(245,120,35,0.14);  color: #f5822a; border:1px solid rgba(245,120,35,.3);}
+.tier-expert      { color: #b06bff; background: rgba(176,107,255,0.13); border:1px solid rgba(176,107,255,.3);}
+.tier-contributor { color: #4aa8ff; background: rgba(74,168,255,0.13);  border:1px solid rgba(74,168,255,.3);}
+.tier-novice      { color: var(--text-muted); background: var(--glass); border:1px solid var(--glass-b);}
+
+/* Kaggle subsection heading */
+.kg-subhead {
+  font-family: var(--font-head);
+  font-size: 1.05rem; font-weight: 700;
+  color: var(--text);
+  margin: 8px 0 18px;
+  display: flex; align-items: center; gap: 10px;
+}
+.kg-subhead .cnt {
+  font-family: var(--font-mono); font-size: 0.66rem;
+  color: var(--teal); background: var(--teal-dim);
+  border: 1px solid var(--glass-b); border-radius: 100px;
+  padding: 2px 9px;
+}
+
+/* Ongoing competition cards */
+.kg-ongoing-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 16px; margin-bottom: 40px;
+}
+.kg-comp-card { padding: 22px 24px; display:flex; flex-direction:column; gap:12px; }
+.kg-comp-top { display:flex; align-items:flex-start; justify-content:space-between; gap:12px; }
+.kg-comp-name {
+  font-family: var(--font-head); font-weight: 700;
+  font-size: 0.98rem; color: var(--text); line-height: 1.4;
+}
+.kg-live-tag {
+  font-family: var(--font-mono); font-size: 0.56rem;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--teal); border: 1px solid rgba(0,212,180,.3);
+  background: rgba(0,212,180,.08); border-radius: 4px;
+  padding: 3px 8px; white-space: nowrap; flex-shrink: 0;
+}
+.kg-live-tag.pending { color: var(--amber); border-color: rgba(245,166,35,.3); background: var(--amber-dim);}
+.kg-rank-row { display: flex; align-items: baseline; gap: 10px; }
+.kg-rank-big {
+  font-family: var(--font-mono); font-size: 2rem;
+  color: var(--teal); line-height: 1;
+}
+.kg-rank-big .hash { color: var(--text-dim); font-size: 1.2rem; }
+.kg-rank-of { font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-muted); }
+.kg-pct-bar {
+  height: 5px; background: var(--bg3); border-radius: 3px; overflow: hidden; margin-top: 4px;
+}
+.kg-pct-fill {
+  height: 100%; width: 0%;
+  background: linear-gradient(90deg, var(--teal), var(--amber));
+  border-radius: 3px;
+  transition: width 1.2s cubic-bezier(0.4,0,0.2,1);
+}
+.kg-comp-meta {
+  font-family: var(--font-mono); font-size: 0.66rem;
+  color: var(--text-muted); display:flex; gap:14px; flex-wrap:wrap;
+}
+.kg-pending-note { font-family: var(--font-mono); font-size:0.72rem; color: var(--text-muted); font-style: italic; }
+
+/* Past finishes table */
+.kg-table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--glass-b);
+  border-radius: var(--radius-lg);
+  background: var(--glass);
+  backdrop-filter: blur(12px);
+}
+.kg-table { width: 100%; border-collapse: collapse; min-width: 620px; }
+.kg-table thead th {
+  font-family: var(--font-mono); font-size: 0.6rem;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--text-muted); text-align: left;
+  padding: 14px 18px; border-bottom: 1px solid var(--glass-b);
+  white-space: nowrap;
+}
+.kg-table tbody td {
+  padding: 15px 18px; font-size: 0.84rem; color: var(--text-muted);
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+  vertical-align: middle;
+}
+.kg-table tbody tr:last-child td { border-bottom: none; }
+.kg-table tbody tr { transition: background .2s; }
+.kg-table tbody tr:hover { background: var(--teal-dim); }
+.kg-table .cmp-name { color: var(--text); font-weight: 500; }
+.kg-table .cmp-name a { color: var(--text); }
+.kg-table .cmp-name a:hover { color: var(--teal); }
+.kg-rank-cell { font-family: var(--font-mono); color: var(--teal); font-weight: 500; white-space: nowrap; }
+.kg-medal-pill {
+  display: inline-flex; align-items:center; gap:5px;
+  font-family: var(--font-mono); font-size: 0.66rem;
+  padding: 3px 9px; border-radius: 100px; white-space: nowrap;
+}
+.medal-gold   { background: rgba(245,166,35,.14); color: var(--amber); }
+.medal-silver { background: rgba(180,190,210,.14); color: #b7c2d6; }
+.medal-bronze { background: rgba(191,120,70,.16); color: #d38a5a; }
+.medal-none   { color: var(--text-dim); }
+.kg-pctile { font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-muted); }
+.kg-empty {
+  padding: 40px; text-align: center;
+  font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-muted);
+}
+
+/* ================================================================
+   PROJECTS SECTION (filterable)
+   ================================================================ */
+.proj-filters {
+  display: flex; flex-wrap: wrap; gap: 10px;
+  margin-bottom: 34px;
+}
+.proj-filter {
+  font-family: var(--font-mono); font-size: 0.68rem;
+  letter-spacing: 0.05em; text-transform: uppercase;
+  color: var(--text-muted);
+  background: var(--glass);
+  border: 1px solid var(--glass-b);
+  border-radius: 100px;
+  padding: 8px 16px; cursor: pointer;
+  transition: color .2s, border-color .2s, background .2s;
+  min-height: 40px;
+}
+.proj-filter:hover { color: var(--teal); border-color: var(--teal); }
+.proj-filter.active {
+  color: #060d1f; background: var(--teal);
+  border-color: var(--teal); font-weight: 500;
+}
+.proj-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 20px;
+}
+.proj-card {
+  padding: 26px; display: flex; flex-direction: column; gap: 14px;
+  transition: transform 0.4s var(--ease), opacity 0.4s var(--ease),
+              box-shadow 0.3s, border-color 0.3s;
+}
+.proj-card.hide {
+  display: none;
+}
+.proj-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+.proj-ico {
+  width: 44px; height: 44px; border-radius: 10px;
+  background: rgba(0,212,180,0.1); border: 1px solid rgba(0,212,180,0.2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem; flex-shrink: 0;
+}
+.proj-links { display: flex; gap: 8px; }
+.proj-link-ico {
+  width: 34px; height: 34px; border: 1px solid var(--glass-b);
+  border-radius: 8px; display: flex; align-items: center; justify-content: center;
+  color: var(--text-muted); font-size: 0.9rem;
+  transition: border-color .2s, color .2s, transform .2s;
+}
+.proj-link-ico:hover { border-color: var(--teal); color: var(--teal); transform: translateY(-2px); }
+.proj-title {
+  font-family: var(--font-head); font-weight: 700;
+  font-size: 1.05rem; color: var(--text); line-height: 1.35;
+}
+.proj-desc { font-size: 0.85rem; color: var(--text-muted); line-height: 1.65; flex: 1; }
+.proj-tags { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 4px; }
+.proj-tag {
+  font-family: var(--font-mono); font-size: 0.62rem;
+  letter-spacing: 0.03em; color: var(--teal);
+  background: rgba(0,212,180,0.08); border: 1px solid rgba(0,212,180,0.16);
+  border-radius: 100px; padding: 3px 10px;
+}
+
+@media (max-width: 1080px) {
+  .kg-summary { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 620px) {
+  .kg-summary { grid-template-columns: 1fr; }
+  .kg-ongoing-grid, .proj-grid { grid-template-columns: 1fr; }
+}
+
+/* ================================================================
    SPOTLIGHT OVERLAY
    ================================================================ */
 .spot {
@@ -1126,6 +1387,8 @@ footer {
     <li><a href="#about">About</a></li>
     <li><a href="#experience">Experience</a></li>
     <li><a href="#skills">Skills</a></li>
+    <li><a href="#kaggle">Kaggle</a></li>
+    <li><a href="#projects">Projects</a></li>
     <li><a href="#certifications">Certs</a></li>
     <li><a href="#education">Education</a></li>
     <li><a href="#contact">Contact</a></li>
@@ -1143,6 +1406,8 @@ footer {
   <a href="#about">About</a>
   <a href="#experience">Experience</a>
   <a href="#skills">Skills</a>
+  <a href="#kaggle">Kaggle</a>
+  <a href="#projects">Projects</a>
   <a href="#certifications">Certifications</a>
   <a href="#education">Education</a>
   <a href="#contact">Contact</a>
@@ -1155,6 +1420,8 @@ footer {
   <div class="spy-d"     data-t="about"           data-lbl="About"></div>
   <div class="spy-d"     data-t="experience"      data-lbl="Experience"></div>
   <div class="spy-d"     data-t="skills"          data-lbl="Skills"></div>
+  <div class="spy-d"     data-t="kaggle"          data-lbl="Kaggle"></div>
+  <div class="spy-d"     data-t="projects"        data-lbl="Projects"></div>
   <div class="spy-d"     data-t="certifications"  data-lbl="Certs"></div>
   <div class="spy-d"     data-t="education"       data-lbl="Education"></div>
   <div class="spy-d"     data-t="contact"         data-lbl="Contact"></div>
@@ -1304,6 +1571,65 @@ footer {
     <h2 class="s-title rv">Certifications</h2>
     <div class="s-rule rv"></div>
     <div class="certs-grid" id="cert-grid"></div>
+  </div>
+</section>
+
+<!-- ============================================================
+     KAGGLE
+     ============================================================ -->
+<section id="kaggle">
+  <div class="cont">
+    <span class="s-label rv">// competitive ml</span>
+    <div class="kg-head-row rv">
+      <h2 class="s-title" style="margin-bottom:0">Kaggle</h2>
+      <a class="kg-profile-link" href="https://www.kaggle.com/pathik1511" target="_blank" rel="noopener noreferrer" aria-label="Open Kaggle profile in a new tab">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.825 23.859c-.022.092-.117.141-.281.141h-3.139c-.187 0-.351-.082-.492-.248l-5.178-6.589-1.448 1.374v5.111c0 .235-.117.352-.351.352H5.505c-.236 0-.354-.117-.354-.352V.353c0-.233.118-.353.354-.353h2.431c.234 0 .351.12.351.353v14.343l6.203-6.272c.165-.165.33-.246.495-.246h3.239c.144 0 .236.06.285.18.047.149.034.255-.036.315l-6.555 6.344 6.836 8.507c.095.104.117.208.07.336"/></svg>
+        @pathik1511
+      </a>
+      <span class="kg-updated" id="kg-updated"></span>
+    </div>
+    <div class="s-rule rv"></div>
+
+    <!-- Tier / medal summary -->
+    <div class="kg-summary" id="kg-summary"></div>
+
+    <!-- Ongoing competitions -->
+    <div id="kg-ongoing-block">
+      <div class="kg-subhead rv">Ongoing Competitions <span class="cnt" id="kg-ongoing-cnt">0</span></div>
+      <div class="kg-ongoing-grid" id="kg-ongoing"></div>
+    </div>
+
+    <!-- Past finishes -->
+    <div id="kg-past-block">
+      <div class="kg-subhead rv">Past Top Finishes <span class="cnt" id="kg-past-cnt">0</span></div>
+      <div class="kg-table-wrap rv">
+        <table class="kg-table" id="kg-past-table">
+          <thead>
+            <tr>
+              <th>Competition</th>
+              <th>Rank</th>
+              <th>Percentile</th>
+              <th>Medal</th>
+              <th>Type</th>
+            </tr>
+          </thead>
+          <tbody id="kg-past-body"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     PROJECTS
+     ============================================================ -->
+<section id="projects">
+  <div class="cont">
+    <span class="s-label rv">// selected work</span>
+    <h2 class="s-title rv">Projects</h2>
+    <div class="s-rule rv"></div>
+    <div class="proj-filters rv" id="proj-filters" role="tablist" aria-label="Filter projects by category"></div>
+    <div class="proj-grid" id="proj-grid"></div>
   </div>
 </section>
 
@@ -1563,6 +1889,105 @@ const DATA = {
     "Innovative medical applications (referenced in summary)",
     "Top LinkedIn Skills: Machine Learning, Google BigQuery, GitHub",
     "Address: 180 Brooklawn St, Farragut, Tennessee, United States"
+  ],
+  /* ----------------------------------------------------------------
+     PROJECTS  — EDIT THESE. Each project has a title, description,
+     one or more tags (used by the filter bar), and optional links.
+     ---------------------------------------------------------------- */
+  projects: [
+    {
+      title: "Multimodal Transformer for Sentiment Analysis",
+      desc: "Network fusing text, image, and tabular inputs into a single transformer encoder for review-level sentiment. Improved downstream creative-effectiveness measurement.",
+      tags: ["NLP", "Deep Learning", "Multimodal"],
+      icon: "network",
+      github: "https://github.com/pathik1511",
+      demo: ""
+    },
+    {
+      title: "Brand WAMM — Weighted Advertising Media Mix",
+      desc: "Production-ready media-mix modeling framework in Python/SQL estimating channel ROI across brands. Modular design cut runtime 40% and scaled across the portfolio.",
+      tags: ["MMM", "Causal Inference", "Python"],
+      icon: "chart",
+      github: "",
+      demo: ""
+    },
+    {
+      title: "Text-Classification Taxonomy Pipeline",
+      desc: "spaCy + Hugging Face pipeline auto-categorizing campaigns and mapping media assets to a standardized taxonomy — reduced manual tagging effort by 60%.",
+      tags: ["NLP", "Python"],
+      icon: "tag",
+      github: "",
+      demo: ""
+    },
+    {
+      title: "Social Sentiment vs. Sports Pricing",
+      desc: "Research pipeline testing whether Twitter/Reddit sentiment leads price movements for major sporting events, using lag analysis and causation diagnostics.",
+      tags: ["NLP", "Time-Series", "Research"],
+      icon: "pulse",
+      github: "https://github.com/pathik1511",
+      demo: ""
+    },
+    {
+      title: "Algorithmic Multi-Touch Attribution",
+      desc: "Path-level MTA models (logistic regression, Shapley value) to improve conversion attribution accuracy and supplement marketing-mix models.",
+      tags: ["Causal Inference", "MMM"],
+      icon: "flow",
+      github: "",
+      demo: ""
+    },
+    {
+      title: "Transfer-Learning Image Classifier",
+      desc: "Custom PyTorch classifiers via transfer learning, containerized on Kubernetes with NGC images and served through a Flask REST API across GCP/AWS/Azure.",
+      tags: ["Deep Learning", "MLOps", "Cloud"],
+      icon: "cloud",
+      github: "https://github.com/pathik1511",
+      demo: ""
+    }
+  ]
+};
+
+/* ------------------------------------------------------------------
+   KAGGLE FALLBACK DATA
+   ------------------------------------------------------------------
+   This is SAMPLE data so the section renders even offline / on first
+   load. When the site is hosted on GitHub Pages, kaggle_stats.json
+   (written by the daily GitHub Action) OVERRIDES everything here.
+   Placeholder rows are marked with "_sample": true.
+   ------------------------------------------------------------------ */
+const KAGGLE_FALLBACK = {
+  "username": "pathik1511",
+  "_sample": true,
+  "updated": "",
+  "profile": {
+    "competitions": { "tier": "Contributor", "rank": null, "gold": 0, "silver": 0, "bronze": 1 },
+    "notebooks":    { "tier": "Contributor", "gold": 0, "silver": 1, "bronze": 2 },
+    "datasets":     { "tier": "Novice",      "gold": 0, "silver": 0, "bronze": 0 },
+    "discussion":   { "tier": "Novice",      "gold": 0, "silver": 0, "bronze": 0 }
+  },
+  "ongoing": [
+    {
+      "title": "Sample Ongoing Competition",
+      "slug": "sample",
+      "rank": 342,
+      "totalTeams": 4120,
+      "percentile": 91.7,
+      "deadline": "2026-09-01",
+      "status": "ranked"
+    },
+    {
+      "title": "Sample Comp (Leaderboard Hidden)",
+      "slug": "sample-hidden",
+      "rank": null,
+      "totalTeams": null,
+      "percentile": null,
+      "deadline": "2026-08-15",
+      "status": "pending"
+    }
+  ],
+  "past": [
+    { "title": "Sample Past Competition A", "slug":"a", "rank": 87,  "totalTeams": 3200, "percentile": 97.3, "medal": "silver", "type": "Featured" },
+    { "title": "Sample Past Competition B", "slug":"b", "rank": 210, "totalTeams": 1850, "percentile": 88.6, "medal": "bronze", "type": "Research" },
+    { "title": "Sample Past Competition C", "slug":"c", "rank": 512, "totalTeams": 2400, "percentile": 78.7, "medal": "none",   "type": "Playground" }
   ]
 };
 
@@ -1574,6 +1999,8 @@ const SITEMAP = {
   "About":           "#about",
   "Experience":      "#experience",
   "Skills":          "#skills",
+  "Kaggle":          "#kaggle",
+  "Projects":        "#projects",
   "Certifications":  "#certifications",
   "Education":       "#education",
   "Contact":         "#contact",
@@ -1624,10 +2051,23 @@ const SITEMAP = {
    ---------------------------------------------------------------- */
 const themeBtn = document.getElementById('theme-btn');
 let dark = true;
-themeBtn.addEventListener('click', () => {
-  dark = !dark;
+/* Restore saved preference. localStorage is blocked in some sandboxed
+   previews (e.g. inside an iframe) — wrapped in try/catch so it never
+   throws; on GitHub Pages it persists the user's choice normally. */
+try {
+  const saved = localStorage.getItem('pp-theme');
+  if (saved === 'light') dark = false;
+} catch (e) {}
+function applyTheme() {
   document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
   themeBtn.textContent = dark ? '☀️' : '🌙';
+  themeBtn.setAttribute('aria-pressed', String(!dark));
+}
+applyTheme();
+themeBtn.addEventListener('click', () => {
+  dark = !dark;
+  applyTheme();
+  try { localStorage.setItem('pp-theme', dark ? 'dark' : 'light'); } catch (e) {}
 });
 
 /* ----------------------------------------------------------------
@@ -1868,7 +2308,7 @@ window.addEventListener('scroll', () => {
    SCROLL SPY
    ---------------------------------------------------------------- */
 const spyDots = document.querySelectorAll('.spy-d');
-const spySecs = ['hero','impact','about','experience','skills','certifications','education','contact'];
+const spySecs = ['hero','impact','about','experience','skills','kaggle','projects','certifications','education','contact'];
 window.addEventListener('scroll', () => {
   let cur = 'hero';
   spySecs.forEach(id => {
@@ -1945,6 +2385,204 @@ window.addEventListener('scroll', () => {
     heroEl.style.transform = `translateY(${window.scrollY * 0.28}px)`;
   }
 }, {passive:true});
+
+/* ----------------------------------------------------------------
+   RENDER PROJECTS  + FILTER BAR
+   ---------------------------------------------------------------- */
+const PROJ_ICONS = {
+  network: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="6" r="2.2"/><circle cx="5" cy="18" r="2.2"/><circle cx="19" cy="12" r="2.2"/><path d="M7.1 6.8 16.9 11M7.1 17.2 16.9 13"/></svg>',
+  chart:   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V4M4 20h16M8 16v-4M12 16V8M16 16v-6"/></svg>',
+  tag:     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 11.5 3H20a1 1 0 0 1 1 1v8.5L12.5 21a1.4 1.4 0 0 1-2 0L3 13.5a1.4 1.4 0 0 1 0-2Z"/><circle cx="16" cy="8" r="1.3"/></svg>',
+  pulse:   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l2.5-7 4 14 2.5-7H21"/></svg>',
+  flow:    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="6" height="4" rx="1"/><rect x="15" y="9" width="6" height="4" rx="1"/><rect x="3" y="16" width="6" height="4" rx="1"/><path d="M9 6h3a2 2 0 0 1 2 2v1M9 18h3a2 2 0 0 0 2-2v-1"/></svg>',
+  cloud:   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 18a4 4 0 0 1-.5-7.97A5.5 5.5 0 0 1 17 9.5a3.5 3.5 0 0 1 .5 6.96Z"/><path d="M12 13v5m-2.5-2.5L12 18l2.5-2.5"/></svg>'
+};
+const ICON_GITHUB = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.39.6.11.82-.26.82-.58 0-.28-.01-1.04-.02-2.04-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.33-1.76-1.33-1.76-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.49 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.11-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.29-1.55 3.3-1.23 3.3-1.23.65 1.66.24 2.88.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.8 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58C20.57 21.8 24 17.3 24 12 24 5.37 18.63 0 12 0z"/></svg>';
+const ICON_LINK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg>';
+
+const projGrid = document.getElementById('proj-grid');
+const projFilters = document.getElementById('proj-filters');
+const allTags = ['All', ...Array.from(new Set(DATA.projects.flatMap(p => p.tags)))];
+
+allTags.forEach((tag, i) => {
+  const b = document.createElement('button');
+  b.className = 'proj-filter' + (i === 0 ? ' active' : '');
+  b.textContent = tag;
+  b.dataset.tag = tag;
+  b.setAttribute('role', 'tab');
+  b.setAttribute('aria-selected', i === 0 ? 'true' : 'false');
+  b.addEventListener('click', () => filterProjects(tag, b));
+  projFilters.appendChild(b);
+});
+
+DATA.projects.forEach((p, i) => {
+  const card = document.createElement('div');
+  card.className = 'g-card proj-card rv';
+  card.style.transitionDelay = (i * 0.06) + 's';
+  card.dataset.tags = p.tags.join('|');
+  const links = [
+    p.github ? `<a class="proj-link-ico" href="${p.github}" target="_blank" rel="noopener noreferrer" aria-label="View ${p.title} source on GitHub">${ICON_GITHUB}</a>` : '',
+    p.demo   ? `<a class="proj-link-ico" href="${p.demo}" target="_blank" rel="noopener noreferrer" aria-label="Open ${p.title} live demo">${ICON_LINK}</a>` : ''
+  ].join('');
+  card.innerHTML = `
+    <div class="proj-top">
+      <div class="proj-ico">${PROJ_ICONS[p.icon] || PROJ_ICONS.network}</div>
+      <div class="proj-links">${links}</div>
+    </div>
+    <div class="proj-title">${p.title}</div>
+    <div class="proj-desc">${p.desc}</div>
+    <div class="proj-tags">${p.tags.map(t => `<span class="proj-tag">${t}</span>`).join('')}</div>
+    <div class="spot"></div>`;
+  projGrid.appendChild(card);
+});
+
+function filterProjects(tag, btn) {
+  document.querySelectorAll('.proj-filter').forEach(f => {
+    const on = f === btn;
+    f.classList.toggle('active', on);
+    f.setAttribute('aria-selected', on ? 'true' : 'false');
+  });
+  document.querySelectorAll('.proj-card').forEach(c => {
+    const tags = c.dataset.tags.split('|');
+    c.classList.toggle('hide', tag !== 'All' && !tags.includes(tag));
+  });
+}
+
+/* ----------------------------------------------------------------
+   RENDER KAGGLE
+   ---------------------------------------------------------------- */
+const TIER_ORDER = { grandmaster: 5, master: 4, expert: 3, contributor: 2, novice: 1 };
+function tierClass(t) { return 'tier-' + String(t || 'novice').toLowerCase(); }
+
+function medalPill(medal) {
+  const m = String(medal || 'none').toLowerCase();
+  if (m === 'gold')   return `<span class="kg-medal-pill medal-gold">● Gold</span>`;
+  if (m === 'silver') return `<span class="kg-medal-pill medal-silver">● Silver</span>`;
+  if (m === 'bronze') return `<span class="kg-medal-pill medal-bronze">● Bronze</span>`;
+  return `<span class="kg-medal-pill medal-none">—</span>`;
+}
+
+function renderKaggle(data) {
+  /* Updated stamp */
+  const upEl = document.getElementById('kg-updated');
+  if (data._sample || !data.updated) {
+    upEl.innerHTML = `<span class="live-dot"></span>Sample data — connect the GitHub Action to go live`;
+  } else {
+    upEl.innerHTML = `<span class="live-dot"></span>Auto-updated ${data.updated}`;
+  }
+
+  /* Summary tier cards */
+  const summary = document.getElementById('kg-summary');
+  const cats = [
+    ['Competitions', data.profile.competitions],
+    ['Notebooks',    data.profile.notebooks],
+    ['Datasets',     data.profile.datasets],
+    ['Discussion',   data.profile.discussion]
+  ];
+  summary.innerHTML = cats.map(([label, c], i) => {
+    if (!c) return '';
+    const medals = `
+      <div class="kg-medals">
+        <div class="kg-medal"><span class="m-ico">🥇</span><span class="m-n">${c.gold||0}</span><span class="m-l">Gold</span></div>
+        <div class="kg-medal"><span class="m-ico">🥈</span><span class="m-n">${c.silver||0}</span><span class="m-l">Silver</span></div>
+        <div class="kg-medal"><span class="m-ico">🥉</span><span class="m-n">${c.bronze||0}</span><span class="m-l">Bronze</span></div>
+      </div>`;
+    const rankLine = (c.rank ? `<div class="kg-sn">#${c.rank.toLocaleString()}</div><div class="kg-sl">Global Rank</div>` : '');
+    return `<div class="g-card kg-stat rv" style="transition-delay:${i*0.07}s">
+      <span class="kg-tier-badge ${tierClass(c.tier)}">${c.tier || 'Novice'}</span>
+      <div class="kg-sl" style="margin-top:0;margin-bottom:10px;color:var(--text)">${label}</div>
+      ${rankLine}
+      ${medals}
+      <div class="spot"></div>
+    </div>`;
+  }).join('');
+
+  /* Ongoing */
+  const ongoing = data.ongoing || [];
+  document.getElementById('kg-ongoing-cnt').textContent = ongoing.length;
+  const ongBlock = document.getElementById('kg-ongoing-block');
+  const ongGrid = document.getElementById('kg-ongoing');
+  if (!ongoing.length) {
+    ongBlock.style.display = 'none';
+  } else {
+    ongGrid.innerHTML = ongoing.map((c, i) => {
+      const ranked = c.status !== 'pending' && c.rank;
+      if (ranked) {
+        const pct = c.percentile != null ? c.percentile : (c.totalTeams ? (1 - c.rank / c.totalTeams) * 100 : 0);
+        return `<div class="g-card kg-comp-card rv" style="transition-delay:${i*0.07}s">
+          <div class="kg-comp-top">
+            <div class="kg-comp-name">${c.title}</div>
+            <span class="kg-live-tag">● Live</span>
+          </div>
+          <div class="kg-rank-row">
+            <div class="kg-rank-big"><span class="hash">#</span>${c.rank.toLocaleString()}</div>
+            <div class="kg-rank-of">of ${c.totalTeams ? c.totalTeams.toLocaleString() : '—'} teams</div>
+          </div>
+          <div class="kg-pct-bar"><div class="kg-pct-fill" data-pct="${pct.toFixed(1)}"></div></div>
+          <div class="kg-comp-meta">
+            <span>Top ${(100 - pct).toFixed(1)}%</span>
+            ${c.deadline ? `<span>Ends ${c.deadline}</span>` : ''}
+          </div>
+          <div class="spot"></div>
+        </div>`;
+      }
+      return `<div class="g-card kg-comp-card rv" style="transition-delay:${i*0.07}s">
+        <div class="kg-comp-top">
+          <div class="kg-comp-name">${c.title}</div>
+          <span class="kg-live-tag pending">Entered</span>
+        </div>
+        <div class="kg-pending-note">Rank pending — leaderboard hidden for this competition.</div>
+        <div class="kg-comp-meta">${c.deadline ? `<span>Ends ${c.deadline}</span>` : ''}</div>
+        <div class="spot"></div>
+      </div>`;
+    }).join('');
+  }
+
+  /* Past */
+  const past = (data.past || []).slice().sort((a, b) => (b.percentile || 0) - (a.percentile || 0));
+  document.getElementById('kg-past-cnt').textContent = past.length;
+  const pastBlock = document.getElementById('kg-past-block');
+  const body = document.getElementById('kg-past-body');
+  if (!past.length) {
+    body.innerHTML = `<tr><td colspan="5" class="kg-empty">No past finishes recorded yet.</td></tr>`;
+  } else {
+    body.innerHTML = past.map(c => {
+      const url = c.slug ? `https://www.kaggle.com/competitions/${c.slug}/leaderboard` : '';
+      const name = url ? `<a href="${url}" target="_blank" rel="noopener noreferrer">${c.title}</a>` : c.title;
+      const pctile = c.percentile != null ? `Top ${(100 - c.percentile).toFixed(1)}%` : '—';
+      return `<tr>
+        <td class="cmp-name">${name}</td>
+        <td class="kg-rank-cell">#${c.rank ? c.rank.toLocaleString() : '—'}${c.totalTeams ? ` / ${c.totalTeams.toLocaleString()}` : ''}</td>
+        <td class="kg-pctile">${pctile}</td>
+        <td>${medalPill(c.medal)}</td>
+        <td style="font-family:var(--font-mono);font-size:0.72rem">${c.type || '—'}</td>
+      </tr>`;
+    }).join('');
+  }
+
+  /* Re-run reveal + animate percentile bars for freshly injected nodes */
+  document.querySelectorAll('#kaggle .rv:not(.vis)').forEach(el => rvObs.observe(el));
+  const kgBarObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.querySelectorAll('.kg-pct-fill').forEach(b => {
+          setTimeout(() => { b.style.width = b.dataset.pct + '%'; }, 180);
+        });
+        kgBarObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.2 });
+  document.querySelectorAll('.kg-comp-card').forEach(el => kgBarObs.observe(el));
+}
+
+/* Load live JSON if hosted; fall back to embedded sample otherwise. */
+(function loadKaggle() {
+  renderKaggle(KAGGLE_FALLBACK); // render immediately so section is never blank
+  fetch('kaggle_stats.json', { cache: 'no-store' })
+    .then(r => { if (!r.ok) throw new Error('no file'); return r.json(); })
+    .then(json => { if (json && json.profile) renderKaggle(json); })
+    .catch(() => { /* keep fallback — expected on file:// or before first Action run */ });
+})();
 
 /* ----------------------------------------------------------------
    RE-OBSERVE any late-rendered .rv elements

@@ -1,0 +1,51 @@
+name: Update Kaggle Stats
+
+# Runs daily and on manual trigger. Writes kaggle_stats.json and commits
+# it back to the repo, which GitHub Pages then serves to the portfolio.
+
+on:
+  schedule:
+    # 06:15 UTC every day (~ 02:15 America/New_York). Cron is always UTC.
+    - cron: "15 6 * * *"
+  workflow_dispatch: {}   # lets you run it on-demand from the Actions tab
+
+# The job commits a file back to the repo, so it needs write permission.
+permissions:
+  contents: write
+
+jobs:
+  update-kaggle:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Kaggle client
+        run: pip install --upgrade kaggle
+
+      - name: Fetch Kaggle stats
+        env:
+          KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
+          KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
+        run: python scripts/fetch_kaggle.py
+        # If auth fails the script exits non-zero; continue so we don't
+        # wipe the last-known-good JSON and the workflow still shows red
+        # for you to notice.
+        continue-on-error: true
+
+      - name: Commit updated stats
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if git diff --quiet -- kaggle_stats.json; then
+            echo "No changes to kaggle_stats.json"
+          else
+            git add kaggle_stats.json
+            git commit -m "chore: update Kaggle stats [skip ci]"
+            git push
+          fi
