@@ -78,11 +78,11 @@ PROFILE_OVERRIDES = {
 # sorts ongoing best-percentile-first so the strongest result always leads.
 ONGOING_OVERRIDES = [
     {"title": "ARC Prize 2026 - ARC-AGI-3", "slug": "arc-prize-2026",
-     "rank": 97, "totalTeams": 1907, "score": "1.25", "deadline": "2026-10-25", "auto": False},
+     "rank": 30, "totalTeams": 2072, "score": "1.46", "deadline": "2026-10-25", "auto": False},
     {"title": "AI Agent Security - Multi-Step Tool Attacks", "slug": "ai-agent-security",
-     "rank": 543, "totalTeams": 2335, "score": "82.620", "deadline": "2026-08-25", "auto": False},
+     "rank": 338, "totalTeams": 2796, "score": "89.190", "deadline": "2026-08-25", "auto": False},
     {"title": "Biohub - Cell Tracking During Development", "slug": "biohub-cell-tracking",
-     "rank": 486, "totalTeams": 1615, "score": "0.900", "deadline": "2026-09-25", "auto": False},
+     "rank": 48, "totalTeams": 2004, "score": "0.916", "deadline": "2026-09-25", "auto": False},
 ]
 
 # Your completed competitions, read directly from your public profile
