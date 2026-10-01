@@ -59,10 +59,10 @@ TEAM_NAMES = [
 ]
 
 # The API cannot reliably return your tier or lifetime medal counts.
-# Verified from your Kaggle Progression dashboard (2026-07-25): 0 medals in
-# every category, Contributor tier ("on path to Expert") across the board.
+# Updated 2026-10-01: first Competitions bronze medal earned (Biohub - Cell
+# Tracking During Development, 249/3947). Contributor tier (Expert needs 2 bronze).
 PROFILE_OVERRIDES = {
-    "competitions": {"tier": "Contributor", "rank": None, "gold": 0, "silver": 0, "bronze": 0},
+    "competitions": {"tier": "Contributor", "rank": None, "gold": 0, "silver": 0, "bronze": 1},
     "notebooks":    {"tier": "Contributor", "gold": 0, "silver": 0, "bronze": 0},
     "datasets":     {"tier": "Contributor", "gold": 0, "silver": 0, "bronze": 0},
     "discussion":   {"tier": "Contributor", "gold": 0, "silver": 0, "bronze": 0},
@@ -77,12 +77,11 @@ PROFILE_OVERRIDES = {
 # shows it in the card meta line. Order here is preserved, but the site also
 # sorts ongoing best-percentile-first so the strongest result always leads.
 ONGOING_OVERRIDES = [
-    {"title": "ARC Prize 2026 - ARC-AGI-3", "slug": "arc-prize-2026",
+    {"title": "ARC Prize 2026 - ARC-AGI-3", "slug": "arc-prize-2026-arc-agi-3",
      "rank": 30, "totalTeams": 2072, "score": "1.46", "deadline": "2026-10-25", "auto": False},
-    {"title": "AI Agent Security - Multi-Step Tool Attacks", "slug": "ai-agent-security",
-     "rank": 338, "totalTeams": 2796, "score": "89.190", "deadline": "2026-08-25", "auto": False},
-    {"title": "Biohub - Cell Tracking During Development", "slug": "biohub-cell-tracking",
-     "rank": 48, "totalTeams": 2004, "score": "0.916", "deadline": "2026-09-25", "auto": False},
+    # Biohub finished (now a bronze medal in PAST_OVERRIDES).
+    # AI Agent Security finished 3901/4186 (bottom ~7% after a large shakeup) —
+    # intentionally not shown; it would weaken the section.
 ]
 
 # Your completed competitions, read directly from your public profile
@@ -92,6 +91,8 @@ ONGOING_OVERRIDES = [
 # entries were removed so the section reads as achievement, not padding.
 # The site sorts these best-percentile-first automatically.
 PAST_OVERRIDES = [
+    {"title": "Biohub - Cell Tracking During Development", "slug": "biohub-cell-tracking-during-development",
+     "rank": 249, "totalTeams": 3947, "medal": "bronze", "type": "Research", "auto": False},
     {"title": "LLM Prompt Recovery", "slug": "llm-prompt-recovery",
      "rank": 567, "totalTeams": 2175, "medal": "none", "type": "Featured", "auto": False},
     {"title": "CommonLit - Evaluate Student Summaries", "slug": "commonlit-evaluate-student-summaries",
