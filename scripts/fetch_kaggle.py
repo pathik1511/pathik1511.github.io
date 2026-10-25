@@ -78,7 +78,7 @@ PROFILE_OVERRIDES = {
 # sorts ongoing best-percentile-first so the strongest result always leads.
 ONGOING_OVERRIDES = [
     {"title": "ARC Prize 2026 - ARC-AGI-3", "slug": "arc-prize-2026-arc-agi-3",
-     "rank": 30, "totalTeams": 2072, "score": "1.46", "deadline": "2026-10-25", "auto": False},
+     "rank": 30, "totalTeams": 2072, "score": "1.46", "deadline": "2026-11-02", "auto": False},
     # Biohub finished (now a bronze medal in PAST_OVERRIDES).
     # AI Agent Security finished 3901/4186 (bottom ~7% after a large shakeup) —
     # intentionally not shown; it would weaken the section.
@@ -93,6 +93,8 @@ ONGOING_OVERRIDES = [
 PAST_OVERRIDES = [
     {"title": "Biohub - Cell Tracking During Development", "slug": "biohub-cell-tracking-during-development",
      "rank": 249, "totalTeams": 3947, "medal": "bronze", "type": "Research", "auto": False},
+    {"title": "RSNA Knee Abnormality Detection", "slug": "rsna-knee-abnormality-detection",
+     "rank": 714, "totalTeams": 6425, "medal": "none", "type": "Research", "auto": False},
     {"title": "LLM Prompt Recovery", "slug": "llm-prompt-recovery",
      "rank": 567, "totalTeams": 2175, "medal": "none", "type": "Featured", "auto": False},
     {"title": "CommonLit - Evaluate Student Summaries", "slug": "commonlit-evaluate-student-summaries",

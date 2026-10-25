@@ -1,7 +1,7 @@
 {
   "username": "pathik1511",
   "_sample": false,
-  "updated": "2026-10-01",
+  "updated": "2026-10-25",
   "profile": {
     "competitions": {
       "tier": "Contributor",
@@ -37,7 +37,7 @@
       "totalTeams": 2072,
       "percentile": 98.6,
       "score": "1.46",
-      "deadline": "2026-10-25",
+      "deadline": "2026-11-02",
       "status": "ranked"
     }
   ],
@@ -50,6 +50,15 @@
       "medal": "bronze",
       "type": "Research",
       "percentile": 93.7
+    },
+    {
+      "title": "RSNA Knee Abnormality Detection",
+      "slug": "rsna-knee-abnormality-detection",
+      "rank": 714,
+      "totalTeams": 6425,
+      "medal": "none",
+      "type": "Research",
+      "percentile": 88.9
     },
     {
       "title": "LLM Prompt Recovery",
